@@ -53,14 +53,10 @@ class Tweet(BaseModel):
 
 
 # path operations
-@app.get(
-    path='/',
-    tags=["Home"]
-    )
-def home():
-    return {"Hello": "World"}
+
 
 ## Users
+### Register a user
 @app.post(
     path='/signup',
     response_model=User,
@@ -71,6 +67,7 @@ def home():
 def signup():
     pass
 
+### Login a user
 @app.post(
     path='/login',
     response_model=User,
@@ -81,6 +78,7 @@ def signup():
 def login():
     pass
 
+### Show all users
 @app.get(
     path='/users',
     response_model=List[User],
@@ -91,6 +89,7 @@ def login():
 def show_all_users():
     pass
 
+### show a user
 @app.get(
     path='/users/{user_id}',
     response_model=User,
@@ -100,6 +99,7 @@ def show_all_users():
     )
 def show_a_user():
     pass
+
 
 @app.delete(
     path='/users/{user_id}/delete',
@@ -123,4 +123,62 @@ def update_a_user():
 
 ## Tweet
 
+### show all tweets
+@app.get(
+    path='/',
+    response_model=List[Tweet],
+    status_code=status.HTTP_200_OK,
+    summary="Show all tweets",
+    tags=["Tweets"]
+    )
+def home():
+    return {"Hello": "World"}
+
+
+### post a tweet
+@app.post(
+    path='/post',
+    response_model=Tweet,
+    status_code=status.HTTP_201_CREATED,
+    summary="Post a Tweet",
+    tags=["Tweets"]
+    )
+def post():
+    pass
+
+
+### show a tweet
+@app.get(
+    path='/tweets/{tweet_id}',
+    response_model=Tweet,
+    status_code=status.HTTP_200_OK,
+    summary="show a Tweet",
+    tags=["Tweets"]
+    )
+def show_a_tweet():
+    pass
+
+
+### delete a tweet
+@app.delete(
+    path='/tweets/{tweet_id}/delete',
+    response_model=Tweet,
+    status_code=status.HTTP_200_OK,
+    summary="Deleete a Tweet",
+    tags=["Tweets"]
+    )
+def delete_a_tweet():
+    pass
+
+
+### delete a tweet
+@app.put(
+    path='/tweets/{tweet_id}/update',
+    response_model=Tweet,
+    status_code=status.HTTP_200_OK,
+    summary="update a Tweet",
+    tags=["Tweets"]
+    )
+def update_a_tweet():
+    pass
 
