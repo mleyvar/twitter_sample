@@ -1,6 +1,7 @@
 # python
 from uuid import UUID
 from datetime import date
+from datetime import datetime
 from typing import Optional
 
 # pydantic
@@ -37,7 +38,16 @@ class User(UserBase):
     birth_date: Optional[date] = Field(default=None)    
 
 class Tweet(BaseModel):
-    pass
+    tweet_id: UUID = Field(...)
+    content: str = Field(
+        ..., 
+        max_length=253,
+        min_length=1
+        )
+    created_at: datetime = Field(default=datetime.now())    
+    update_at: Optional[datetime] = Field(default=None)
+    by: User = Field(...)    
+    
 
 @app.get(
     path='/',
@@ -45,3 +55,4 @@ class Tweet(BaseModel):
     )
 def home():
     return {"Hello": "World"}
+
