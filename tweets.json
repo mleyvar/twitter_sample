@@ -1,1 +1,44 @@
-[]
+[
+    {
+        "tweet_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "content": "este es mi primer tweet",
+        "created_at": "2022-02-13 18:19:54.471260",
+        "updated_at": "2022-02-14 00:20:56.310000+00:00",
+        "by": {
+            "user_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+            "email": "mark@example.com",
+            "password": "12345678",
+            "first_name": "mark",
+            "last_name": "lopez",
+            "birth_date": "2022-02-14"
+        }
+    },
+    {
+        "tweet_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "content": "este es otro tweet de prueba",
+        "created_at": "2022-02-13 18:19:54.471260",
+        "updated_at": "2022-02-14 00:20:56.310000+00:00",
+        "by": {
+            "user_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+            "email": "juan@example.com",
+            "password": "12345678",
+            "first_name": "juan",
+            "last_name": "mendez",
+            "birth_date": "2022-02-14"
+        }
+    },
+    {
+        "tweet_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "content": "adios de tweeter",
+        "created_at": "2022-02-13 18:19:54.471260",
+        "updated_at": "2022-02-14 00:20:56.310000+00:00",
+        "by": {
+            "user_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+            "email": "rosa@example.com",
+            "password": "12345678",
+            "first_name": "rosa",
+            "last_name": "rojas",
+            "birth_date": "2022-02-14"
+        }
+    }
+]
