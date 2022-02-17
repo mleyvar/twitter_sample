@@ -1,4 +1,5 @@
 # python
+from email import message
 import json
 from uuid import UUID
 from datetime import date
@@ -56,6 +57,51 @@ class Tweet(BaseModel):
     created_at: datetime = Field(default=datetime.now())    
     updated_at: Optional[datetime] = Field(default=None)
     by: User = Field(...)    
+    
+
+class Recipe(BaseModel):
+    recipe_id: UUID = Field(...)
+    title: str = Field(
+        ..., 
+        max_length=500,
+        min_length=1
+        )
+    detail: str = Field(
+        ..., 
+        max_length=1250,
+        min_length=1
+        )
+    image_url: str = Field(
+        ..., 
+        min_length=1
+        )
+    created_at: datetime = Field(default=datetime.now())    
+    
+class UserRecipe(BaseModel):
+    user_id: UUID = Field(...)
+    user: str = Field(
+        ..., 
+        max_length=25,
+        min_length=1
+        )
+    password: str = Field(
+        ..., 
+        max_length=25,
+        min_length=1
+        )
+    created_at: datetime = Field(default=datetime.now())    
+    
+class Result(BaseModel):
+    code: str = Field(
+        ..., 
+        max_length=5,
+        min_length=1
+        )
+    message: str = Field(
+        ..., 
+        max_length=50,
+        min_length=1
+        )
     
 
 
@@ -260,7 +306,7 @@ def show_a_tweet():
     tags=["Tweets"]
     )
 def delete_a_tweet():
-    pass
+    return {"delete": "true"}
 
 
 ### delete a tweet
@@ -274,3 +320,98 @@ def delete_a_tweet():
 def update_a_tweet():
     pass
 
+## get recetas
+@app.get(
+    path='/recipe',
+    response_model=List[Recipe],
+    status_code=status.HTTP_200_OK,
+    summary="Recipes",
+    tags=["Recipes"]
+    )
+def get_recipe():
+    """
+    Recipes
+
+    This path operation show all recipes in the app
+
+    Parameters:
+                
+    Return a json list with all users in the app, with the following:
+        - recipe_id: UUID
+        - title: str
+        - image_url: stri
+        - created_at: datetime
+    """
+    with open("recipe.json", "r", encoding="utf-8") as f:
+        results = json.loads(f.read())
+        return results
+
+
+## get recetas
+@app.post(
+    path='/recipe',
+    response_model=Recipe,
+    status_code=status.HTTP_200_OK,
+    summary="Recipes",
+    tags=["Recipes"]
+    )
+def post_recipe(recipe: Recipe = Body(...)):
+    """
+     Recipes
+
+    This path operation add recipes in the app
+
+    Parameters:
+                
+    Return a json list with all users in the app, with the following:
+        - recipe_id: UUID
+        - title: str
+        - image_url: stri
+        - created_at: datetime
+    """
+    with open("recipe.json", "r+", encoding="utf-8") as f:
+        results = json.loads(f.read())
+        recipe_dict = recipe.dict()
+        recipe_dict["recipe_id"] = str(recipe_dict["recipe_id"])
+        recipe_dict["title"] = str(recipe_dict["title"])
+        recipe_dict["detail"] = str(recipe_dict["detail"])
+        recipe_dict["image_url"] = str(recipe_dict["image_url"])
+        recipe_dict["created_at"] = str(recipe_dict["created_at"])
+
+        results.append(recipe_dict)
+        f.seek(0)
+        f.write(json.dumps(results))
+        return recipe     
+
+
+## get recetas
+@app.post(
+    path='/access',
+    response_model=Result,
+    status_code=status.HTTP_200_OK,
+    summary="Recipes",
+    tags=["Recipes"]
+    )
+def access(userLogin: UserLogin = Body(...)):
+    """
+    Access
+
+    This path operation return access in the app
+
+    Parameters:
+                
+    Return a json with message from access in the app, with the following:
+        - code: str   (code=0 = OK;  code=-1 = ERROR)
+        - message: str (message="OK" = OK;  message="text" = ERROR)
+    """
+    if userLogin.email == "admin@admin.com" and userLogin.password == "Password123":
+        return Result(
+            code="0",
+            message = "OK"
+            )
+    else:
+        return Result(
+            code="-1",
+            message = "Invalid access"
+            )
+         
