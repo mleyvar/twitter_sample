@@ -7,7 +7,8 @@ from datetime import datetime
 from typing import Optional, List
 
 
-
+import logging
+import logging.config
 
 # pydantic
 from pydantic import BaseModel
@@ -19,8 +20,8 @@ from fastapi import FastAPI
 from fastapi import status
 from fastapi import Body
 
-
-app = FastAPI()
+logger = logging.getLogger(__name__)
+app = FastAPI(debug=True)
 
 # Models
 class UserBase(BaseModel):
@@ -328,7 +329,6 @@ def update_a_tweet():
 ## get recetas
 @app.get(
     path='/recipe',
-    response_model=List[Recipe],
     status_code=status.HTTP_200_OK,
     summary="Recipes",
     tags=["Recipes"]
@@ -347,9 +347,15 @@ def get_recipe():
         - image_url: stri
         - created_at: datetime
     """
+    cad = ""
     with open("recipe.json", "r", encoding="utf-8") as f:
-        results = json.loads(f.read())
-        return results
+
+        results =  json.loads(f.read())
+
+        return {"recipes": results}
+
+#        return {"recipes":list}  
+
 
 
 ## get recetas
