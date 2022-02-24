@@ -344,7 +344,7 @@ def get_recipe():
     """
     with open("recipe.json", "r", encoding="utf-8") as f:
         results = json.loads(f.read())
-        return {"recipe":results}
+        return results
 
 
 ## get recetas
