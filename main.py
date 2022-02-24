@@ -75,6 +75,11 @@ class Recipe(BaseModel):
         ..., 
         min_length=1
         )
+    author: str = Field(
+        ..., 
+        min_length=1
+        )
+        
     created_at: datetime = Field(default=datetime.now())    
     
 class UserRecipe(BaseModel):
