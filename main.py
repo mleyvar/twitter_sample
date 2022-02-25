@@ -96,6 +96,8 @@ class UserRecipe(BaseModel):
         min_length=1
         )
     created_at: datetime = Field(default=datetime.now())    
+
+
     
 class Result(BaseModel):
     code: str = Field(
@@ -109,6 +111,8 @@ class Result(BaseModel):
         min_length=1
         )
     
+class AccessResponse(BaseModel):
+    access_response: Result = Field(...)
 
 
 # path operations
@@ -416,7 +420,7 @@ def access(userLogin: UserLogin = Body(...)):
         - message: str (message="OK" = OK;  message="text" = ERROR)
     """
     if userLogin.email == "admin@admin.com" and userLogin.password == "Password123":
-        return {"access_response": Result(code="0", message = "OK" ) }
+        return AccessResponse(Result(code="0", message = "OK" ))   
     else:
-        return {"access_response": Result(code="-1", message = "Invalid access" ) }
+        return AccessResponse(Result(code="-1", message = "Invalid access" ))
          
