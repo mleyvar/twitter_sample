@@ -402,7 +402,6 @@ def post_recipe(recipe: Recipe = Body(...)):
 ## get recetas
 @app.post(
     path='/access',
-    response_model=Result,
     status_code=status.HTTP_200_OK,
     summary="Recipes",
     tags=["Recipes"]
@@ -419,8 +418,14 @@ def access(userLogin: UserLogin = Body(...)):
         - code: str   (code=0 = OK;  code=-1 = ERROR)
         - message: str (message="OK" = OK;  message="text" = ERROR)
     """
+    base = Result(code="0", message="base")
+    res = AccessResponse(access_response = base)
     if userLogin.email == "admin@admin.com" and userLogin.password == "Password123":
-        return AccessResponse(Result(code="0", message = "OK" ))   
+        res.access_response.code = "0"
+        res.access_response.message = "OK"
+        return res   
     else:
-        return AccessResponse(Result(code="-1", message = "Invalid access" ))
+        res.access_response.code = "-1"
+        res.access_response.message = "Invalid access"
+        return res
          
