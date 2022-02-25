@@ -416,13 +416,7 @@ def access(userLogin: UserLogin = Body(...)):
         - message: str (message="OK" = OK;  message="text" = ERROR)
     """
     if userLogin.email == "admin@admin.com" and userLogin.password == "Password123":
-        return Result(
-            code="0",
-            message = "OK"
-            )
+        return {"access_response": Result(code="0", message = "OK" ) }
     else:
-        return Result(
-            code="-1",
-            message = "Invalid access"
-            )
+        return {"access_response": Result(code="-1", message = "Invalid access" ) }
          
