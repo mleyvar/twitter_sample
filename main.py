@@ -112,7 +112,7 @@ class Result(BaseModel):
         )
     
 class AccessResponse(BaseModel):
-    access_response: Result = Field(...)
+    result: Result = Field(...)
 
 
 # path operations
@@ -419,13 +419,13 @@ def access(userLogin: UserLogin = Body(...)):
         - message: str (message="OK" = OK;  message="text" = ERROR)
     """
     base = Result(code="0", message="base")
-    res = AccessResponse(access_response = base)
+    res = AccessResponse(result = base)
     if userLogin.email == "admin@admin.com" and userLogin.password == "Password123":
-        res.access_response.code = "0"
-        res.access_response.message = "OK"
+        res.result.code = "0"
+        res.result.message = "OK"
         return res   
     else:
-        res.access_response.code = "-1"
-        res.access_response.message = "Invalid access"
+        res.result.code = "-1"
+        res.result.message = "Invalid access"
         return res
          
