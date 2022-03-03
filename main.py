@@ -45,6 +45,26 @@ class User(UserBase):
         )
     birth_date: Optional[date] = Field(default=None)    
 
+class UserRegisterRecipe(UserBase):
+    first_name: str = Field(
+        ...,
+        min_length=1,
+        max_length=50
+        )
+    last_name: str = Field(
+        ...,
+        min_length=1,
+        max_length=50
+        )
+    email: str = Field(
+        ...,
+        min_length=1,
+        max_length=50
+        )
+    password: str = Field (..., min_length=8)
+    birth_date: Optional[date] = Field(default=None)    
+
+
 class UserRegister(User):
        password: str = Field (..., min_length=8)
 
@@ -399,7 +419,7 @@ def post_recipe(recipe: Recipe = Body(...)):
         return recipe     
 
 
-## get recetas
+## access 
 @app.post(
     path='/access',
     status_code=status.HTTP_200_OK,
@@ -428,4 +448,29 @@ def access(userLogin: UserLogin = Body(...)):
         res.result.code = "-1"
         res.result.message = "Invalid access"
         return res
+         
+
+## access 
+@app.post(
+    path='/registerUser',
+    status_code=status.HTTP_200_OK,
+    summary="Recipes",
+    tags=["Recipes"]
+    )
+def register_user(userRegisterRecipe: UserRegisterRecipe = Body(...)):
+    """
+    registerUsers
+
+    This path operation register a user in the app
+
+    Parameters:
+                
+    Return a json with message from access in the app, with the following:
+        - code: str   (code=0 = OK;  code=-1 = ERROR)
+        - message: str (message="OK" = OK;  message="text" = ERROR)
+    """
+    base = Result(code="0", message="¡Bien venido " + userRegisterRecipe.first_name)
+    
+    res = AccessResponse(result = base)
+    return res
          
