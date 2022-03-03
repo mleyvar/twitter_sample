@@ -45,7 +45,7 @@ class User(UserBase):
         )
     birth_date: Optional[date] = Field(default=None)    
 
-class UserRegisterRecipe(UserBase):
+class UserRegisterRecipe(BaseModel):
     first_name: str = Field(
         ...,
         min_length=1,
